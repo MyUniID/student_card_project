@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>معاينة البطاقة الجامعية</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      direction: rtl;
+      background-color: #f0f0f0;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .card-preview {
+      display: inline-block;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 12px #aaa;
+      text-align: right;
+      width: 400px;
+      position: relative;
+    }
+
+    .card-preview img {
+      width: 90px;
+      height: 110px;
+      object-fit: cover;
+      border: 2px solid black;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    .card-preview h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      margin-top: 10px;
+      padding-right: 10px;
+    }
+
+    .info p {
+      margin: 6px 0;
+      font-size: 16px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 15px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>معاينة البيانات قبل إصدار البطاقة الجامعية 🎓 </h2>
+
+  <div class="card-preview">
+    <img src="{{ url_for('static', filename='uploads/' + photo_filename) }}" alt="الصورة الشخصية">
+    <div class="info">
+      <h1>بطاقة الطالب/ة</h1>
+      <p><strong>الاسم:</strong> {{ first_name }} {{ last_name }}</p>
+      <p><strong>تاريخ الميلاد:</strong> {{ birth_date }}</p>
+      <p><strong>الكلية:</strong> {{ faculty }}</p>
+      <p><strong>السنة :</strong> {{ academic_year }}</p>
+      <p><strong>الرقم الجامعي(ID):</strong> {{ student_id }}</p>
+
+
+
+
+    </div>
+
+    <form method="POST" action="{{ url_for('generate_card') }}">
+      <!-- الحقول المخفية لنقل البيانات للصفحة النهائية -->
+      <input type="hidden" name="first_name" value="{{ first_name }}">
+      <input type="hidden" name="last_name" value="{{ last_name }}">
+      <input type="hidden" name="passport_number" value="{{ passport_number }}">
+      <input type="hidden" name="birth_date" value="{{ birth_date }}">
+      <input type="hidden" name="birth_place" value="{{ birth_place }}">
+      <input type="hidden" name="academic_year" value="{{ academic_year }}">
+      <input type="hidden" name="highschool_type" value="{{ highschool_type }}">
+      <input type="hidden" name="highschool_year" value="{{ highschool_year }}">
+      <input type="hidden" name="major" value="{{ major }}">
+      <input type="hidden" name="photo_filename" value="{{ photo_filename }}">
+      <p class="note">⚠️ هذه بطاقة الطالب/ة الرسمية يرجى الاحتفاظ بها وتقديمها عند الحاجة</p>
+
+      <button class="button" type="submit">✔️ إصدار البطاقة</button>
+    </form>
+  </div>
+
+</body>
+</html>
