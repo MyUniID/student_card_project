@@ -1,115 +1,230 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <title>إدخال البيانات</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      direction: rtl;
-      background-color: #f5f5f5;
-      padding: 20px;
-    }
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
 
-    form {
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 500px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+ <style>
+  body {
+    background-color: #f0f4f8;
+    font-family: 'Cairo', sans-serif;
+    padding: 30px;
+  }
 
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
+  .form-container {
+    max-width: 600px;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
 
-    button {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+  .form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #4e6b50; /* زيتي متوسط */
+  }
 
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  .form-outline {
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  input.form-control,
+  select.form-select,
+  textarea.form-control {
+    background: linear-gradient(135deg, #e6f1e6, #f4f9f4); /* زيتي فاتح متدرج */
+    border: 1px solid #a3bfa5;
+    border-radius: 10px;
+    padding: 10px 40px 10px 20px;
+    transition: 0.3s ease;
+    color: #000000;
+  }
+
+  input.form-control:focus,
+  select.form-select:focus,
+  textarea.form-control:focus {
+    background: #d0e2d0; /* تركيز: زيتي متوسط */
+    border-color: #5a7c5a;
+    box-shadow: 0 0 0 0.2rem rgba(74, 105, 74, 0.25);
+    color: #000000;
+  }
+
+  input.form-control.filled,
+  select.form-select.filled,
+  textarea.form-control.filled {
+    background: linear-gradient(135deg, #e6f1e6, #f4f9f4);
+    border: 2px solid #3e5740; /* زيتي غامق */
+  }
+
+  /* زر مخصص */
+  .btn-custom {
+    width: 100%;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #6d8f6d, #a3c3a3); /* زيتي متدرج */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    transition: 0.3s ease;
+  }
+
+  .btn-custom:hover {
+    background: linear-gradient(135deg, #5b7b5b, #91b391);
+  }
+
+  /* إشارة الصح */
+  .form-outline .checkmark {
+    position: absolute;
+    top: 50%;
+    left: 10px; /* الجهة المعاكسة للنص */
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    display: none;
+  }
+
+  .form-outline.filled .checkmark {
+    display: block;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%233e5740' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='none'/><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const fields = document.querySelectorAll("input.form-control, select.form-select, textarea.form-control");
+
+    fields.forEach(field => {
+      const wrapper = field.closest(".form-outline");
+      const checkmark = document.createElement("span");
+      checkmark.classList.add("checkmark");
+      wrapper.appendChild(checkmark);
+
+      const updateStatus = () => {
+        if (field.value.trim() !== "") {
+          field.classList.add("filled");
+          wrapper.classList.add("filled");
+        } else {
+          field.classList.remove("filled");
+          wrapper.classList.remove("filled");
+        }
+      };
+
+      updateStatus();
+      field.addEventListener("input", updateStatus);
+      field.addEventListener("change", updateStatus);
+    });
+  });
+</script>
+
 </head>
 <body>
+
+<div class="form-container">
+  <h2 class="form-title">📋 إدخال البيانات</h2>
+
   <form action="/preview" method="POST" enctype="multipart/form-data">
-    <h2>إدخال البيانات</h2>
-      <input type="text" name="first_name" placeholder="الاسم الأول" required pattern="[أ-ي\s]+" title="يرجى إدخال أحرف عربية فقط">
-      <input type="text" name="last_name" placeholder="اسم العائلة" required pattern="[أ-ي\s]+" title="يرجى إدخال أحرف عربية فقط">
-      <input type="text" name="passport_number" placeholder="رقم الهوية/جواز السفر" required pattern="\d+" title="يرجى إدخال أرقام فقط">
-      <input type="date" name="birth_date" required>
-     <input type="text" name="birth_place" placeholder="تولد" required>
-    <select name="academic_year" required>
-      <option value="">اختر السنة الدراسية</option>
-      <option value="الأولى">الأولى</option>
-      <option value="الثانية">الثانية</option>
-      <option value="الثالثة">الثالثة</option>
-      <option value="الرابعة">الرابعة</option>
+    <div class="form-outline">
+      <input type="text" name="first_name" class="form-control" placeholder="الاسم الأول" required pattern="[أ-ي\s]+" title="يرجى إدخال أحرف عربية فقط"/>
+    </div>
+
+    <div class="form-outline">
+      <input type="text" name="last_name" class="form-control" placeholder="اسم العائلة" required pattern="[أ-ي\s]+" title="يرجى إدخال أحرف عربية فقط"/>
+    </div>
+
+    <div class="form-outline">
+      <input type="text" name="passport_number" class="form-control" placeholder="رقم الهوية / جواز السفر" required pattern="\d+" title="يرجى إدخال أرقام فقط"/>
+    </div>
+
+    <div class="form-outline">
+      <input type="date" name="birth_date" class="form-control" required />
+    </div>
+
+    <div class="form-outline">
+      <input type="text" name="birth_place" class="form-control" placeholder="مكان الولادة" required />
+    </div>
+
+    <div class="form-outline">
+      <select class="form-select" name="academic_year" required>
+        <option value="">اختر السنة الدراسية</option>
+        <option value="الأولى">الأولى</option>
+        <option value="الثانية">الثانية</option>
+        <option value="الثالثة">الثالثة</option>
+        <option value="الرابعة">الرابعة</option>
+      </select>
+    </div>
+
+    <div class="form-outline">
+      <select class="form-select" name="highschool_type" required>
+        <option value="">الشهادة الثانوية</option>
+        <option value="علمي">علمي</option>
+        <option value="أدبي">أدبي</option>
+        <option value="مهني">مهني</option>
+      </select>
+    </div>
+    <div class="form-outline">
+        <select class="form-select" name="highschool_year" required>
+          <option value=""> سنة الحصول على شهادة البكالوريا</option>
+          <option value<option value="2000">٢٠٠٠</option>
+         <option value="2001">٢٠٠١</option>
+         <option value="2002">٢٠٠٢</option>
+         <option value="2003">٢٠٠٣</option>
+         <option value="2004">٢٠٠٤</option>
+         <option value="2005">٢٠٠٥</option>
+         <option value="2006">٢٠٠٦</option>
+         <option value="2007">٢٠٠٧</option>
+         <option value="2008">٢٠٠٨</option>
+         <option value="2009">٢٠٠٩</option>
+         <option value="2010">٢٠١٠</option>
+         <option value="2011">٢٠١١</option>
+         <option value="2012">٢٠١٢</option>
+         <option value="2013">٢٠١٣</option>
+         <option value="2014">٢٠١٤</option>
+         <option value="2015">٢٠١٥</option>
+         <option value="2016">٢٠١٦</option>
+         <option value="2017">٢٠١٧</option>
+         <option value="2018">٢٠١٨</option>
+         <option value="2019">٢٠١٩</option>
+         <option value="2020">٢٠٢٠</option>
+         <option value="2021">٢٠٢١</option>
+         <option value="2022">٢٠٢٢</option>
+         <option value="2023">٢٠٢٣</option>
+         <option value="2024">٢٠٢٤</option>
+         <option value="2025">٢٠٢٥</option>
+         ="</option>
     </select>
-    <select name="highschool_type" required>
-      <option value="">الشهادة الثانوية</option>
-      <option value="علمي">علمي</option>
-      <option value="أدبي">أدبي</option>
-      <option value="مهني">مهني</option>
-    </select>
+    </div>
 
-<select name="highschool_year" id="highschool_year" required>
-   <option value=""> سنة الحصول على شهادة البكالوريا:</option>
-    <option value="2000">2000</option>
-    <option value="2001">2001</option>
-    <option value="2002">2002</option>
-    <option value="2003">2003</option>
-    <option value="2004">2004</option>
-    <option value="2005">2005</option>
-    <option value="2006">2006</option>
-    <option value="2007">2007</option>
-    <option value="2008">2008</option>
-    <option value="2009">2009</option>
-    <option value="2010">2010</option>
-    <option value="2011">2011</option>
-    <option value="2012">2012</option>
-    <option value="2013">2013</option>
-    <option value="2014">2014</option>
-    <option value="2015">2015</option>
-    <option value="2016">2016</option>
-    <option value="2017">2017</option>
-  <option value="2018">2018</option>
-  <option value="2019">2019</option>
-  <option value="2020">2020</option>
-  <option value="2021">2021</option>
-  <option value="2022">2022</option>
-  <option value="2023">2023</option>
-  <option value="2024">2024</option>
-  <option value="2025">2025</option>
-    </select>
+    <div class="form-outline">
+      <select class="form-select" name="faculty" required>
+        <option value="">اختر الكلية</option>
+        <option value="الهندسة">الهندسة</option>
+        <option value="الاقتصاد">الاقتصاد</option>
+        <option value="العلوم">العلوم</option>
+        <option value="الآداب">الآداب</option>
+        <option value="لغات ونرجمة">لغات ونرجمة</option>
+        <option value="رياضيات">رياضيات</option>
+      </select>
+    </div>
 
-<select name="faculty">
-                <option value="">اختر الكلية</option>
-                <option value="الهندسة">الهندسة</option>
-                <option value="الاقتصاد">الاقتصاد</option>
-                <option value="العلوم">العلوم</option>
-                <option value="الآداب">الآداب</option>
-                 <option value="لغات ونرجمة">لغات ونرجمة</option>
-                <option value="رياضيات">رياضيات</option>
+        <div class="form-outline">
+      <label class="form-label">📷 تحميل صورة شخصية:</label>
+      <input type="file" class="form-control" name="photo" accept="image/*" required />
+    </div>
 
-      <form action="/preview" method="post" enctype="multipart/form-data">
-  <select name="major" required>
 
-    <label>تحميل صورة شخصية:</label>
-    <input type="file" name="photo" accept="image/*" required>
-    <button type="submit">التالي ➜</button>
+    <button type="submit" class="btn btn-primary btn-custom mt-3">التالي ➜</button>
   </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
 </body>
 </html>
