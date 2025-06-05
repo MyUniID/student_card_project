@@ -1,12 +1,47 @@
+</html>
 <!DOCTYPE html>
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
   <title>تم إصدار البطاقة</title>
+  <style>
+    body {
+      direction: rtl;
+      text-align: center;
+      margin-top: 50px;
+      font-family: 'Cairo', sans-serif;
+      background-color: #f1f8f6;
+    }
+
+    h2 {
+      color: #4f6f3c;
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 25px;
+      background: linear-gradient(to right, #789262, #99b97b);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    a.button:hover {
+      background: linear-gradient(to right, #5a7c40, #88a165);
+    }
+  </style>
 </head>
-<body style="direction: rtl; text-align: center; margin-top: 50px;">
+<body>
   <h2>✔️ تم إصدار البطاقة بنجاح!</h2>
   <p>شكراً {{ name }}، تم حفظ بطاقتك.</p>
-  <a href="/form">🔄 إنشاء بطاقة جديدة</a>
+<body style="direction: rtl; text-align: center; margin-top: 50px;">
+  <a href="/form">🔄 إنشاء بطاقة جديدة</a><br><br>
+
+  <!-- زر الملاحظات -->
+  <a href="/Note" class="button">📝 نقدّر ملاحظاتك لتحسين خدماتنا 💚</a>
 </body>
 </html>

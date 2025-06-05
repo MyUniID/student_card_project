@@ -47,7 +47,7 @@ def preview():
                            highschool_type=request.form['highschool_type'],
                            highschool_year=request.form['highschool_year'],
                            faculty=request.form['faculty'],
-                           student_id=generate_student_id(),
+                           student_id=student_id,
                            photo_filename=photo_filename)
 
 
