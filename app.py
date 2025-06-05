@@ -17,17 +17,18 @@ def generate_student_id():
 
 @app.route('/')
 def home():
-    return redirect('/form')
+    return redirect(url_for('form'))
 
 @app.route('/form')
 def form():
     return render_template('form.html')
+
 @app.route('/preview', methods=['POST'])
 def preview():
     if 'photo' not in request.files or request.files['photo'].filename == '':
         return "لم يتم رفع صورة"
 
-    photo = request.files['photo']  # نسيت تعيين المتغير photo
+    photo = request.files['photo']  # الحصول على الملف المُرسل من حقل "photo" في الفورم
     photo_filename = secure_filename(photo.filename)
     photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_filename))  # تصحيح المسار وتعديل المسافة البادئة
 
@@ -54,6 +55,10 @@ def preview():
 @app.route('/generate_card', methods=['POST'])
 def generate_card():
     return render_template('generated.html', name=request.form['first_name'])
+
+@app.route("/note")
+def Note():
+    return render_template("Note.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

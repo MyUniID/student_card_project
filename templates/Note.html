@@ -110,6 +110,7 @@
     <div class="title">لاتترددوا في مراسلتنا لأي استفسار او تعاون! 📝 </div>
 
     <form>
+      <form method="POST" action="{{ url_for('Note') }}">
       <div class="form-group">
         <label for="email">البريد الإلكتروني</label>
         <input type="email" id="email" name="email" placeholder="example@student.com" required>
